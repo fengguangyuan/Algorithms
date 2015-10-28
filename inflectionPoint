@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+int divide(int *a, int l, int h)
+{
+  if(l < h){
+  	int left = l;
+  	int right = h;
+  	int mid = (left+right)>>1;
+	if((a[mid]-a[mid-1])*(a[mid]-a[mid+1])>0)
+	  return mid;
+	divide(a,l,mid-1);
+	divide(a,mid+1,h);
+  }else{
+	return -1;
+	   }
+}
+
+int search(int *a, int n)
+{
+  int index = -1;
+  if(a == NULL) return index;
+  if(n == 1) return 0;
+  if(n == 2) return 1;
+  index = divide(a,0,n-1);
+  return index;
+}
+
+int main() {
+  int a[]={13,14,17,20,29,2,4,6};
+  cout<<"size is : "<<sizeof a/sizeof(int)<<endl;
+	cout<<search(a,sizeof a/sizeof(int))<<endl;
+	return 0;
+}
