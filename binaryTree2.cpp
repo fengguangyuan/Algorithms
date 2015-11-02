@@ -1,30 +1,32 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
-struct BNode{
-  int value;
+typedef struct BNode{
+  char value;
   BNode* left;
   BNode* right;
 }*BTree;
-
-void built(BTree tree)
+BNode* built(BNode* tree)
 {
-  if(tree == NULL)
-  {
-	tree = (BNode*)malloc(sizeof BNode);
-	tree->left = tree->right = NULL;
-	cout<<"Please input a value:"<<endl;
-	cin>>tree->value;
-	if(tree->value == 0);
-		return;
-  }
-  built(tree->left);
-  built(tree->right);
+   char c;
+   printf("%s","please input a char:\n");
+   scanf("%c",&c);
+   if(c == '#'){
+   tree = NULL;
+   }
+   else
+   {
+    if(tree == NULL)
+        tree=(BNode*)malloc(sizeof(BNode));
+    tree->value = c;
+    tree->left = built(tree->left);
+    tree->right = built(tree->right);
+   }
+   return tree;
 }
 
 int main() {
-	cout<<"Hello"<<endl;
   	BTree tree = NULL;
-    built(tree);
+        built(tree);
 	return 0;
 }
