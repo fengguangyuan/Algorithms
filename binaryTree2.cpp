@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <queue>
+#include <stack>
 typedef struct BNode{
   char value;
   BNode* left;
@@ -31,14 +32,86 @@ void preorder(BTree tree)
 {
     if(tree)
     {
-        printf("%c",tree->value);
+        printf("%c,",tree->value);
         preorder(tree->left);
         preorder(tree->right);
     }else{
         return;
     }
 }
+//show the tree by levels traveling
+void showWithQueue(BTree tree)
+{
+    printf("%s\n","show the tree with a stack by levels traveling:");
+    if(tree == NULL)
+        return;
+    else{
+        std::queue<BNode*> q;
+        q.push(tree);
+        while(!q.empty()&&q.front()!=NULL)
+        {
+            BNode* tmp = q.front();
+            q.pop();
+            printf("%c\n",tmp->value);
+            if(tmp->left)
+                q.push(tmp->left);
+            if(tmp->right);
+                q.push(tmp->right);
+        }
+       printf("%s\n","**** end ****");
+    }
+}
+void showWithStackByMidorder(BTree tree)
+{
+    printf("%s\n","show the tree with a stack by pre-order:");
+    if(tree==NULL)
+        return;
+    else{
+        std::stack<BNode*> st;
+        st.push(tree);
+        BNode* tmp = st.top();
+        while(!st.empty() || tmp)
+        {
+            while(tmp)
+            {
+                if(tmp->left)
+                   st.push(tmp->left);
+                tmp = tmp->left;
+            }
+            tmp = st.top();
+            printf("%c\n",tmp->value);
+            st.pop();
+            if(tmp->right)
+                st.push(tmp->right);
+            tmp=tmp->right;
+        }
+        printf("%s\n","******* end ******");
+    }
+}
+void showWithStackByPreorder(BTree tree)
+{
+    printf("%s\n","show the tree with a stack by mid-order:");
+    if(tree==NULL)
+        return;
+    else{
+        std::stack<BNode*> st;
+        BNode* tmp = tree;
+        while(!st.empty() || tmp)
+        {
 
+            while(tmp)
+            {
+                st.push(tmp);
+                printf("%c\n",tmp->value);
+                tmp = tmp->left;
+            }
+            tmp = st.top();
+            st.pop();
+            tmp = tmp->right;
+        }
+        printf("%s\n","******* end ******");
+    }
+}
 //the depth of the tree
 int depth(BTree tree)
 {
@@ -89,5 +162,8 @@ int main() {
   	printf("%d\n",depth(tree));
   	printf("%d\n",depth2(tree));
   	printf("%d\n",leaves(tree));
+  	showWithQueue(tree);
+  	showWithStackByPreorder(tree);
+  	showWithStackByMidorder(tree);
 	return 0;
 }
