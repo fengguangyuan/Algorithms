@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+// Consume O(logn)
 void adjustHeap(int m[], int pos, int N) {
     int k = pos;
     while ( 2 * k <= N) {
@@ -19,6 +20,7 @@ void adjustHeap(int m[], int pos, int N) {
     }
 }
 
+// O(n*logn)
 void buildHeap(int m[], int N) {
     int p = N / 2;
     while (p > 0) {
@@ -27,6 +29,7 @@ void buildHeap(int m[], int N) {
     }
 }
 
+// O(n * logn)
 void heapSort(int m[], int N) {
     buildHeap(m, N);
 
